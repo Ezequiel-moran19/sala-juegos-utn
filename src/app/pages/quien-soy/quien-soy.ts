@@ -17,13 +17,17 @@ export class QuienSoy implements OnInit {
   ngOnInit(): void {
 
     this.githubService.obtenerUsuario('Ezequiel-moran19').subscribe({
+
         next: (data) => {
           this.usuario = data;
+
           this.cdr.detectChanges();
         },
+
         error: (err) => {
           console.log('ERROR API', err);
         }
+
       });
 
   }

@@ -2,25 +2,62 @@
   <div class="row justify-content-center">
     <div class="col-md-5">
       <div class="card p-4 shadow-lg border-0">
-        <h3 class="text-center mb-4">Iniciar Sesión</h3>
 
-        <form>
+        <h3 class="text-center mb-4"> Iniciar Sesión </h3>
+
+        <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
           <div class="mb-3">
-            <label class="form-label fw-semibold">Correo electrónico</label>
-            <input type="email" class="form-control" placeholder="ejemplo@mail.com" />
+
+            <label class="form-label fw-semibold"> Correo electrónico</label>
+            <input type="email" class="form-control" placeholder="ejemplo@mail.com" formControlName="email" />
+
+            @if( formLogin.controls.email.invalid && formLogin.controls.email.touched){
+
+              <small class="text-danger">
+                @if(formLogin.controls.email.errors?.['required']){ El email es obligatorio }
+                @if(formLogin.controls.email.errors?.['email']){ El email no es válido }
+              </small>
+            }
+
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold">Contraseña</label>
-            <input type="password" class="form-control" placeholder="********" />
+
+            <label class="form-label fw-semibold"> Contraseña </label>
+            <input type="password" class="form-control" placeholder="********" formControlName="password" />
+
+            @if( formLogin.controls.password.invalid && formLogin.controls.password.touched){
+
+              <small class="text-danger">
+                @if(formLogin.controls.password.errors?.['required']){ La contraseña es obligatoria }
+                @if(formLogin.controls.password.errors?.['minlength']){ La contraseña debe tener al menos 6 caracteres }
+              </small>
+            }
+
           </div>
 
-          <button class="btn btn-primary w-100 py-2">Ingresar</button>
+          @if(mensajeError){ <div class="alert alert-danger"> {{ mensajeError }} </div> }
+
+          <button class="btn btn-primary w-100 py-2" [disabled]="formLogin.invalid || cargando">
+            @if(cargando){ Ingresando...} 
+            @else { Ingresar}
+          </button>
+
         </form>
 
-        <div class="text-center mt-3">
-          <small>¿No tenés cuenta?</small><br />
-          <a routerLink="/register" class="text-decoration-none fw-semibold">Registrate acá</a>
+        <div class="mt-4">
+          <p class="text-center mb-2"> Acceso rápido </p>
+          <div class="d-flex gap-2 justify-content-center flex-wrap">
+            <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('admin@test.com', '123456')" > Admin </button>
+            <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('test_1@test.com', '123456')" > Usuario </button>
+            <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('tester@yopmail.com', 'tester01')" > Tester </button>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <small> ¿No tenés cuenta? </small>
+          <br />
+          <a routerLink="/register" class="text-decoration-none fw-semibold" > Registrate acá </a>
         </div>
       </div>
     </div>

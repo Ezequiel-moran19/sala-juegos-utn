@@ -2,36 +2,86 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card p-4 shadow">
-        <h3 class="text-center mb-4">Register</h3>
 
-        <form>
+        <h3 class="text-center mb-4"> Registro </h3>
+
+        @if(mensajeError){ <div class="alert alert-danger"> {{ mensajeError }} </div> }
+        @if(mensajeExito){ <div class="alert alert-success"> {{ mensajeExito }} </div> }
+
+        <form [formGroup]="formRegistro" (ngSubmit)="onSubmit()">
+
           <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Tu nombre">
+
+            <label class="form-label"> Nombre </label>
+            <input type="text" class="form-control" placeholder="Tu nombre" formControlName="nombre" >
+
+            @if(formRegistro.controls.nombre.invalid && formRegistro.controls.nombre.touched){
+              <small class="text-danger">
+                @if(formRegistro.controls.nombre.errors?.['required']){ El nombre es obligatorio }
+              </small>
+
+            }
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Apellido</label>
-            <input type="text" class="form-control" placeholder="Tu apellido">
+
+            <label class="form-label"> Apellido </label>
+            <input type="text" class="form-control" placeholder="Tu apellido" formControlName="apellido" >
+
+            @if(formRegistro.controls.apellido.invalid && formRegistro.controls.apellido.touched){
+              <small class="text-danger">
+                @if(formRegistro.controls.apellido.errors?.['required']){ El apellido es obligatorio }
+              </small>
+            }
+
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Edad</label>
-            <input type="number" class="form-control" placeholder="Edad">
+
+            <label class="form-label"> Edad </label>
+            <input type="number" class="form-control" placeholder="Edad" formControlName="edad" >
+
+            @if(formRegistro.controls.edad.invalid && formRegistro.controls.edad.touched){
+              <small class="text-danger">
+                @if(formRegistro.controls.edad.errors?.['required']){ La edad es obligatoria }
+                @if(formRegistro.controls.edad.errors?.['min']){ Debe ser mayor o igual a 18 }
+              </small>
+            }
+
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" placeholder="ejemplo@mail.com">
+
+            <label class="form-label"> Email </label>
+            <input type="email" class="form-control" placeholder="ejemplo@mail.com" formControlName="email">
+
+            @if(formRegistro.controls.email.invalid && formRegistro.controls.email.touched){
+              <small class="text-danger">
+                @if(formRegistro.controls.email.errors?.['required']){ El email es obligatorio }
+                @if(formRegistro.controls.email.errors?.['email']){ El email no es válido }
+              </small>
+            }
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Contraseña</label>
-            <input type="password" class="form-control" placeholder="********">
+          <div class="mb-4">
+            <label class="form-label"> Contraseña </label>
+            <input type="password" class="form-control" placeholder="********" formControlName="password" >
+
+            @if(formRegistro.controls.password.invalid && formRegistro.controls.password.touched){
+              <small class="text-danger">
+                @if(formRegistro.controls.password.errors?.['required']){ La contraseña es obligatoria }
+                @if(formRegistro.controls.password.errors?.['minlength']){ La contraseña debe tener al menos 6 caracteres }
+              </small>
+            }
           </div>
 
-          <button class="btn btn-primary w-100">Registrarse</button>
+          <button class="btn btn-primary w-100" [disabled]="formRegistro.invalid || cargando" >
+            @if(cargando){ Registrando... }
+            @else { Registrarse }
+          </button>
+
         </form>
+
       </div>
     </div>
   </div>

@@ -1,3 +1,9 @@
+.game-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: white;
+}
+
 .game-icon {
   width: 72px;
   height: 72px;
@@ -6,5 +12,11 @@
   font-weight: bold;
   background: #8b5cf6;
   color: white;
+}
+
+.badge-custom {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #cbd5e1;
 }
 
