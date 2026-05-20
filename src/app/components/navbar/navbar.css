@@ -4,6 +4,10 @@
   padding: 14px 0;
 }
 
+.navbar-brand {
+  color: white;
+}
+
 .nav-link-custom {
   color: #cbd5e1;
   text-decoration: none;

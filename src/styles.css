@@ -5,6 +5,13 @@ body {
   min-height: 100vh;
 }
 
+.card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  color: white;
+}
+
 .btn-primary {
   background: #8b5cf6;
   border: none;
@@ -47,10 +54,4 @@ body {
 
 .text-muted {
   color: #94a3b8 !important;
-}
-.card {
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 16px;
-  color: white;
 }
