@@ -36,7 +36,13 @@
 
           </div>
 
-          @if(mensajeError){ <div class="alert alert-danger"> {{ mensajeError }} </div> }
+          @if(mensajeError !== ''){
+
+            <div class="alert alert-danger mt-3">
+              {{ mensajeError }}
+            </div>
+
+          }
 
           <button class="btn btn-primary w-100 py-2" [disabled]="formLogin.invalid || cargando">
             @if(cargando){ Ingresando...} 

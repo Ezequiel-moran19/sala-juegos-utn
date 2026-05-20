@@ -16,9 +16,7 @@ export class Navbar {
   authService = inject(AuthService);
 
   async cerrarSesion() {
-
     await this.authService.cerrarSesion();
-
   }
 
 }

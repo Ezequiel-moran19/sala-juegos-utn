@@ -10,6 +10,6 @@ import { Navbar } from './components/navbar/navbar';
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class App {
+export class App{
   protected readonly title = signal('sala-juegos-app');
 }

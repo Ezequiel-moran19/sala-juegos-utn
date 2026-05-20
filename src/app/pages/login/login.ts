@@ -53,12 +53,9 @@ export class Login {
   }
 
   manejarError(error: any) {
-    if (error.code === 'Credenciales inválidas') {
-      this.mensajeError = 'Correo electrónico o contraseña incorrectos.';
-    }
-    else {
-      this.mensajeError = error.message || 'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.';
-    }
+
+    console.log(error);
+    this.mensajeError = 'Correo electrónico o contraseña incorrectos.';
   }
 
   loginRapido(email: string, password: string) {

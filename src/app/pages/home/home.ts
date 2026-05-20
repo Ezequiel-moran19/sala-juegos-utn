@@ -11,22 +11,6 @@ import { RouterLink } from "@angular/router";
   styleUrl: './home.css',
 })
 
-export class Home implements OnInit {
-
+export class Home {
   authService: AuthService = inject(AuthService);
-
-  mensajeExito: string = '';
-
-  async ngOnInit() {
-    await this.authService.obtenerUsuarioActual();
-  }
-
-  async logout() {
-    await this.authService.cerrarSesion();
-    this.mensajeExito = 'Sesion cerrada correctamente.';
-
-    setTimeout(() => {
-      this.mensajeExito = '';
-    }, 3000);
-  }
 }
