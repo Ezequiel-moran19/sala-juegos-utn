@@ -5,21 +5,12 @@
 
         <h3 class="text-center mb-4"> Registro </h3>
 
-        @if(mensajeError){ 
-          <div class="alert alert-danger"> 
-            {{ mensajeError }} 
-          </div> }
-        @if(mensajeExito){ 
-          <div class="alert alert-success"> 
-           {{ mensajeExito }} 
-          </div> }
-
         <form [formGroup]="formRegistro" (ngSubmit)="onSubmit()">
 
           <div class="mb-3">
 
             <label class="form-label"> Nombre </label>
-            <input type="text" class="form-control" placeholder="Tu nombre" formControlName="nombre" >
+            <input id="name" type="text" class="form-control" placeholder="Tu nombre" formControlName="nombre" >
 
             @if(formRegistro.controls.nombre.invalid && formRegistro.controls.nombre.touched){
               <small class="text-danger">
@@ -81,10 +72,30 @@
             }
           </div>
 
-          <button class="btn btn-primary w-100" [disabled]="formRegistro.invalid || cargando" >
-            @if(cargando){ Registrando... }
+          @if(mensajeError()){ 
+            <div class="alert alert-danger"> 
+              {{ mensajeError() }} 
+            </div> 
+          }
+          @if(mensajeExito()){ 
+            <div class="alert alert-success"> 
+            {{ mensajeExito() }} 
+            </div> 
+          }
+
+          <button class="btn btn-primary w-100" [disabled]="formRegistro.invalid || cargando()" >
+            @if(cargando()){ Registrando... }
             @else { Registrarse }
           </button>
+
+          <div class="mt-4">
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-outline-secondary btn-sm" type="button"
+                (click)="completarFormularioTest('test_2','test_2','40','test_2@test.com','123456')" >
+                Usuario Test
+              </button>
+            </div>
+          </div>
 
         </form>
 

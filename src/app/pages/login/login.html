@@ -36,16 +36,16 @@
 
           </div>
 
-          @if(mensajeError !== ''){
+          @if(mensajeError() !== ''){
 
             <div class="alert alert-danger mt-3">
-              {{ mensajeError }}
+              {{ mensajeError() }}
             </div>
 
           }
 
-          <button class="btn btn-primary w-100 py-2" [disabled]="formLogin.invalid || cargando">
-            @if(cargando){ Ingresando...} 
+          <button class="btn btn-primary w-100 py-2" [disabled]="formLogin.invalid || cargando()">
+            @if(cargando()){ Ingresando...} 
             @else { Ingresar}
           </button>
 
@@ -56,7 +56,7 @@
           <div class="d-flex gap-2 justify-content-center flex-wrap">
             <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('admin@test.com', '123456')" > Admin </button>
             <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('test_1@test.com', '123456')" > Usuario </button>
-            <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('tester@yopmail.com', 'tester01')" > Tester </button>
+            <button class="btn btn-outline-primary btn-sm" type="button" (click)="loginRapido('test_2@test.com', '123456')" > Tester </button>
           </div>
         </div>
 
