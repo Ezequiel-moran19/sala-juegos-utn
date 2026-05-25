@@ -3,9 +3,9 @@ import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@supabase/supabase-js';
-import { AuthService } from '../../services/auth.service';
-import { UsuariosService } from '../../services/usuarios.service';
-import { UsuarioRegistro } from '../../interfaces/registro.interface';
+import { AuthService } from '../../services/auth/auth.service';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
+import { UsuarioRegistro } from '../../interfaces/auth/registro.interface';
 
 @Component({
   standalone: true,

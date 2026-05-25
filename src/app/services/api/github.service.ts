@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GithubUser } from '../interfaces/github-user.interface';
+import { GithubUser } from '../../interfaces/api/github-user.interface';
 
 @Injectable({
   providedIn: 'root',

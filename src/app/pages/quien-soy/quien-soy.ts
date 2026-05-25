@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Github } from '../../services/github.service';
-import { GithubUser } from '../../interfaces/github-user.interface';
+import { Github } from '../../services/api/github.service';
+import { GithubUser } from '../../interfaces/api/github-user.interface';
 
 @Component({
   selector: 'app-quien-soy',

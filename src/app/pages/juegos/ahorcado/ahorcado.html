@@ -1,0 +1,73 @@
+<div class="container text-center mt-5">
+  @if(!mostrarRanking){
+    <h1 class="mb-5"> Ahorcado </h1>
+
+    @if(!juegoTerminado){
+      <!-- DIBUJO -->
+      <div class="hangman">
+        <div class="base"></div>
+        <div class="poste"></div>
+        <div class="barra"></div>
+        <div class="cuerda"></div>
+
+        @if(errores > 0){ <div class="cabeza"></div> }
+        @if(errores > 1){ <div class="cuerpo"></div> }
+        @if(errores > 2){ <div class="brazo-izq"></div> }
+        @if(errores > 3){ <div class="brazo-der"></div> }
+        @if(errores > 4){ <div class="pierna-izq"></div> }
+        @if(errores > 5){ <div class="pierna-der"></div> }
+      </div>
+
+      <p class="mt-3 fs-5"> Intentos restantes: {{ maxErrores - errores }} </p>
+      <p class="fs-5"> Tiempo: {{ tiempoActual }} segundos </p>
+      <!-- PALABRA -->
+      <div class="palabra mt-5">
+        @for(letra of palabra.split(''); track $index){
+          <span class="mx-2 fs-1 fw-bold"> {{ letrasSeleccionadas.includes(letra) ? letra : '_' }} </span>
+        }
+      </div>
+
+      <p class="fs-5 mt-4"> Letras usadas: {{ letrasSeleccionadas.length }} </p>
+
+      <!-- TECLADO -->
+      <div class="d-flex flex-wrap gap-2 justify-content-center mt-5">
+        @for(letra of abecedario; track letra){
+          <button class="btn btn-outline-light" [disabled]=" letrasSeleccionadas.includes(letra) "
+            (click)="seleccionarLetra(letra)" >
+            {{ letra }}
+          </button>
+        }
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 mt-5 flex-wrap">
+        <button class="btn btn-info" (click)="mostrarOcultarRanking()" > Ver Ranking </button>
+        <button class="btn btn-secondary" routerLink="/" > Volver al home </button>
+
+      </div>
+
+    } @else {
+    <!-- RESULTADO FINAL -->
+    <div class="mt-5">
+      @if(gano){
+        <h2 class="text-success"> ¡Ganaste! </h2>
+      } @else {
+        <h2 class="text-danger"> Perdiste </h2>
+        <p class="fs-4"> La palabra era: {{ palabra }} </p>
+      }
+
+      <p class="fs-5 mt-3"> Tiempo: {{ tiempoPartida }} segundos </p>
+      <p class="fs-5"> Puntaje: {{ puntajeFinal }} </p>
+      <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <button class="btn btn-warning" (click)="iniciarJuego()" > Jugar otra vez </button>
+        <button class="btn btn-secondary" routerLink="/" > Volver al home </button>
+        <button class="btn btn-info" (click)="mostrarOcultarRanking()" > Ver Ranking </button>
+      </div>
+    </div>
+    }
+
+  } @else {
+    <!-- RANKING -->
+    <app-ranking [titulo]="'Ranking Top 5'" [ranking]="ranking" />
+    <button class="btn btn-secondary mt-4" (click)="mostrarOcultarRanking()" > Volver al juego </button>
+  }
+</div>
