@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-
-import { AuthService } from '../../services/auth.service';
-import { UsuarioRegistro } from '../../interfaces/registro.interface';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { User } from '@supabase/supabase-js';
+import { AuthService } from '../../services/auth/auth.service';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
+import { UsuarioRegistro } from '../../interfaces/auth/registro.interface';
 
 @Component({
   standalone: true,
@@ -18,14 +14,15 @@ import { UsuarioRegistro } from '../../interfaces/registro.interface';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-
 export class Register {
 
   authService = inject(AuthService);
+  usuariosService = inject(UsuariosService);
   router = inject(Router);
-  mensajeError = '';
-  mensajeExito = '';
-  cargando = false;
+
+  mensajeError = signal('');
+  mensajeExito = signal('');
+  cargando = signal(false);
 
   formRegistro = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -39,82 +36,119 @@ export class Register {
 
     this.limpiarMensajes();
 
-    if(this.formRegistro.invalid){
+    if (this.formRegistro.invalid) {
+
       this.formRegistro.markAllAsTouched();
+
       return;
+
     }
 
-    this.cargando = true;
+    this.cargando.set(true);
+
     await this.registrarUsuario();
+
   }
 
-  limpiarMensajes(){
-    this.mensajeError = '';
-    this.mensajeExito = '';
+  limpiarMensajes() {
+    this.mensajeError.set('');
+    this.mensajeExito.set('');
   }
 
-  async registrarUsuario(){
+  async registrarUsuario() {
 
-    const email = this.formRegistro.value.email!;
-    const password = this.formRegistro.value.password!;
-    const { data, error } = await this.authService.registro(email, password);
+    const form = this.formRegistro.value;
+    const { data, error } = await this.authService.registro( form.email!, form.password! );
 
-    if(error){
+    if (error) {
       this.manejarError(error);
       return;
     }
 
     const user = data.user;
 
-    if(!user){
-      this.mensajeError = 'No se pudo obtener el usuario';
-      this.cargando = false;
+    if (!user) {
+
+      this.mensajeError.set('No se pudo obtener el usuario');
+      this.cargando.set(false);
+
       return;
+
     }
+
     await this.guardarUsuarioDB(user);
 
   }
 
-  manejarError(error: any){
-    this.cargando = false;
-    if(error.code === 'user_already_exists'){
-      this.mensajeError = 'El usuario ya se encuentra registrado';
+  manejarError(error: any) {
+
+    this.cargando.set(false);
+
+    if (error.code === 'user_already_exists') {
+
+      this.mensajeError.set( 'El usuario ya se encuentra registrado' );
     } else {
-      this.mensajeError = error.message;
+
+      this.mensajeError.set( 'Error al registrar usuario' );
+
     }
+
+    this.resetearFormulario();
+
   }
 
-  async guardarUsuarioDB(user: any){
-
-    const usuario: UsuarioRegistro = {
-      nombre: this.formRegistro.value.nombre!,
-      apellido: this.formRegistro.value.apellido!,
-      edad: Number(this.formRegistro.value.edad),
-      email: user.email,
-    };
-
-    const { error } = await this.authService.guardarUsuario({
-      id: user.id,
-      ...usuario
-    });
-
-    this.cargando = false;
-
-    if(error){
-      this.mensajeError = 'Error al guardar usuario en la base de datos';
-      return;
-    }
-
-    await this.authService.login(
-      this.formRegistro.value.email!,
-      this.formRegistro.value.password!
-    );
-
-    this.mensajeExito = 'Usuario registrado correctamente';
+  resetearFormulario() {
 
     this.formRegistro.reset();
 
-    this.router.navigate(['/']);
+    setTimeout(() => {
+
+      this.mensajeError.set('');
+
+      const inputName = document.getElementById('name');
+
+      inputName?.focus();
+
+    }, 3000);
+
+  }
+
+  async guardarUsuarioDB(user: User) {
+
+    const form = this.formRegistro.value;
+    const usuario: UsuarioRegistro = { nombre: form.nombre!, apellido: form.apellido!, edad: Number(form.edad), email: user.email! };
+    const { error } = await this.usuariosService.guardarUsuario( user.id, usuario );
+
+    this.cargando.set(false);
+
+    if (error) {
+
+      this.mensajeError.set( 'Error al guardar usuario en la base de datos' );
+
+      return;
+
+    }
+
+    await this.authService.login(
+      form.email!,
+      form.password!
+    );
+
+    this.mensajeExito.set( 'Usuario registrado correctamente' );
+    this.formRegistro.reset();
+
+    setTimeout(() => {
+
+      this.mensajeExito.set('');
+      this.router.navigate(['/']);
+
+    }, 3000);
+
+  }
+
+  completarFormularioTest( nombre: string, apellido: string, edad: string, email: string, password: string) {
+
+    this.formRegistro.patchValue({  nombre,  apellido, edad, email, password });
   }
 
 }

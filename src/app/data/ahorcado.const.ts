@@ -1,0 +1,17 @@
+export const PALABRAS_AHORCADO = [
+  'ANGULAR',
+  'SUPABASE',
+  'PROGRAMACION',
+  'JAVASCRIPT',
+  'COMPONENTE',
+  'SERVICIO',
+  'INYECCION',
+  'DEPENDENCIA',
+  'TYPESCRIPT',
+  'FRONTEND'
+];
+
+export const ABECEDARIO =
+  'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+
+export const MAX_ERRORES = 6;

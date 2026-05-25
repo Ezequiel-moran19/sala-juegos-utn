@@ -1,28 +1,29 @@
 <div class="container text-center d-flex flex-column justify-content-center align-items-center" style="min-height: 40vh;">
-
   <h1 class="display-3 fw-bold mb-3"> Bienvenido a <span class="gaming-title">Sala de Juegos</span> </h1>
 
-  <p class="text-muted w-75">
-    ¡La mejor plataforma para poner a prueba tus habilidades!
-    Disfruta de juegos clásicos, nuevos desafíos y compite con otros jugadores.
-    ¿Estás listo para la diversión?
-  </p>
+  @if(!authService.estaLogueado()){
 
-  <div class="mt-4 d-flex gap-3 justify-content-center">
+    <p class="text-muted w-75">
+      ¡La mejor plataforma para poner a prueba tus habilidades!
+      Disfruta de juegos clásicos, nuevos desafíos y compite con otros jugadores.
+      ¿Estás listo para la diversión?
+    </p>
 
-    @if(!authService.cargandoSesion()){
+    <div class="mt-4 d-flex gap-3 justify-content-center">
+      <a routerLink="/register" class="btn btn-primary px-4 py-2"> Crear cuenta </a>
+      <a routerLink="/login" class="btn btn-outline-primary px-4 py-2"> Iniciar sesión </a>
+    </div>
+  }
 
-      <div class="mt-4 d-flex gap-3 justify-content-center">
-
-        @if(!authService.estaLogueado()){
-
-          <a routerLink="/register" class="btn btn-primary px-4 py-2"> Crear cuenta </a>
-
-          <a routerLink="/login" class="btn btn-outline-primary px-4 py-2"> Iniciar sesión</a>
+  @else {
+    <h4 class="text-white fw-bold mt-3"> Selecciona un juego {{ authService.usuarioActual()?.email }} </h4>
+    <div class="container mt-5">
+      <h2 class="text-center mb-5 fw-bold text-white"> Juegos Disponibles </h2>
+      <div class="row g-4">
+        @for (juego of juegos; track juego.titulo) {
+          <div class="col-12 col-md-6 col-lg-4"> <app-game-card [juego]="juego"></app-game-card> </div>
         }
-
       </div>
-    }
-  </div>
-
+    </div>
+  }
 </div>

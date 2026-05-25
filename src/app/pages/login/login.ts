@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginUsuario } from '../../interfaces/login.interface';
 
 @Component({
   standalone: true,
@@ -14,11 +13,11 @@ import { LoginUsuario } from '../../interfaces/login.interface';
 })
 export class Login {
 
-  authService: AuthService = inject(AuthService);
-  router: Router = inject(Router)
-  mensajeError: string = '';
-  cargando: boolean = false;
-
+  authService = inject(AuthService);
+  router = inject(Router);
+  mensajeError = signal('');
+  cargando = signal(false);
+  
   formLogin = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -26,40 +25,58 @@ export class Login {
 
   async onSubmit() {
     this.limpiarMensaje();
-
     if (this.formLogin.invalid) {
-      this.formLogin.markAllAsTouched();// Marcar todos los campos como tocados para mostrar los errores de validación
+      this.formLogin.markAllAsTouched();
       return;
     }
-    this.cargando = true;
+
+    this.cargando.set(true);
     await this.iniciarSesion();
   }
 
   limpiarMensaje() {
-    this.mensajeError = '';
+    this.mensajeError.set('');
   }
 
   async iniciarSesion() {
-    const usuario: LoginUsuario = { email: this.formLogin.value.email!, password: this.formLogin.value.password!,};
-    const { error } = await this.authService.login(usuario.email, usuario.password);
 
-    this.cargando = false;
+    const form = this.formLogin.value;
+    const { error } = await this.authService.login( form.email!, form.password! );
+
+    this.cargando.set(false);
 
     if (error) {
       this.manejarError(error);
-    } else {
-      this.router.navigate(['/']);
+      return;
     }
+
+    this.router.navigate(['/']);
   }
 
   manejarError(error: any) {
 
-    console.log(error);
-    this.mensajeError = 'Correo electrónico o contraseña incorrectos.';
+    if (error.code === 'invalid_credentials') {
+      this.mensajeError.set( 'Correo electrónico o contraseña incorrectos.' );
+
+    } else {
+      this.mensajeError.set( 'Error al iniciar sesión.' );
+
+    }
+    this.resetearFormulario();
+  }
+
+  resetearFormulario() {
+    setTimeout(() => {
+      this.mensajeError.set('');
+      this.formLogin.reset();
+
+      const inputEmail = document.getElementById('email');
+      inputEmail?.focus();
+
+    }, 3000);
   }
 
   loginRapido(email: string, password: string) {
     this.formLogin.patchValue({ email, password });
   }
-
 }
