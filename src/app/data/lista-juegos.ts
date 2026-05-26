@@ -13,5 +13,10 @@ export const JUEGOS = [
     titulo: 'Preguntados',
     imagen: 'img/PG.jpg',
     ruta: '/preguntados'
+  },
+  {
+    titulo: 'Sudoku',
+    imagen: 'img/sudoku.jpg',
+    ruta: '/sudoku'
   }
 ];

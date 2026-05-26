@@ -30,6 +30,12 @@ export const routes: Routes = [
     .then(m => m.Preguntados)
   },
   {
+    path: 'sudoku',  
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/juegos/sudoku/sudoku')
+    .then(m => m.Sudoku)
+  },
+  {
     path: 'chat', 
     canActivate: [authGuard], 
     loadComponent: () => import('./pages/chat/chat')

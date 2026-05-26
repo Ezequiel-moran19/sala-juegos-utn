@@ -24,14 +24,18 @@ export class Preguntados implements OnInit {
   preguntaActual?: Pregunta;
   opciones: string[] = [];
   indiceActual = 0;
-  puntaje = 0;
   juegoTerminado = false;
   cargando = true;
   mostrarRanking = false;
   ranking: Rankings[] = [];
+  puntaje = 0;
+  respuestasCorrectas = 0;
+  errores = 0;
+  tiempoInicio = 0;
 
   ngOnInit() {
     this.cargarPreguntas();
+    this.tiempoInicio = Date.now();
   }
 
   cargarPreguntas() {
@@ -76,7 +80,12 @@ export class Preguntados implements OnInit {
   responder(opcion: string) {
 
     if (opcion === this.preguntaActual?.respuestaCorrecta) {
-      this.puntaje++;
+      this.respuestasCorrectas++;
+      this.puntaje += 100;
+
+    } else {
+      this.errores++;
+      this.puntaje = Math.max(0, this.puntaje - 25);
     }
 
     this.indiceActual++;
@@ -85,9 +94,25 @@ export class Preguntados implements OnInit {
 
   private async finalizarJuego() {
 
+    const tiempo = Math.floor((Date.now() - this.tiempoInicio) / 1000);
+
+    const bonusTiempo = Math.max(0, 200 - tiempo);
+
+    this.puntaje += bonusTiempo;
+
+    if (this.errores === 0) {
+      this.puntaje += 300;
+    }
+
     const usuario = this.authService.usuarioActual()?.email ?? '';
 
-    const partida = { usuario, puntaje: this.puntaje};
+    const partida = {
+      usuario,
+      puntaje: this.puntaje,
+      aciertos: this.respuestasCorrectas,
+      errores: this.errores,
+      tiempo
+    };
 
     const { error } = await this.preguntadosService.guardarPartida(partida);
 
@@ -95,7 +120,6 @@ export class Preguntados implements OnInit {
       console.error(error);
       return;
     }
-
     await this.cargarRanking();
     this.mostrarRanking = true;
   }

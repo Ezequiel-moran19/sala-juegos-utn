@@ -1,0 +1,73 @@
+<div class="container text-center mt-4">
+
+  @if(!mostrarRanking){
+  
+    <h2 class="mb-4">Sudoku</h2>
+  
+    <div class="mb-3">
+      <p><strong>Tiempo:</strong> {{ tiempoActual }}</p>
+      <p><strong>Movimientos:</strong> {{ movimientos }}</p>
+      <p><strong>Puntos:</strong> {{ puntos }}</p>
+    </div>
+  
+    <table class="tabla-sudoku mx-auto">
+      <tbody>
+        @for (fila of tablero; track $index; let i = $index) {
+          <tr>
+            @for (celda of fila; track $index; let j = $index) {
+  
+              <td
+                (click)="seleccionarCelda(i, j)"
+                [class.fija]="celda.fijo"
+                [class.seleccionada]="filaSeleccionada === i && columnaSeleccionada === j"
+                [class.error]="celda.error">
+                {{ celda.valor || '' }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  
+    <div class="mt-4">
+      @for (numero of [1,2,3,4,5,6]; track numero) {
+        <button class="btn btn-primary m-1" (click)="ponerNumero(numero)"> {{ numero }} 
+          ({{ obtenerCantidadRestante(numero) }})
+        </button>
+      }
+    </div>
+  
+    <div class="mt-3">
+      <button class="btn btn-danger me-2" (click)="limpiarCelda()"> Limpiar </button>
+      <button class="btn btn-success" (click)="nuevoJuego()"> Nuevo Juego </button>
+    </div>
+  
+    @if (juegoTerminado) {
+      <h4 class="text-success mt-4">¡Ganaste!</h4>
+    }
+  
+  } @else {
+  
+    <app-ranking
+      [titulo]="'Ranking Sudoku'"
+      [ranking]="ranking" />
+  
+    <button
+      class="btn btn-secondary mt-4"
+      (click)="mostrarRanking = false">
+  
+      Volver al juego
+    </button>
+  }
+
+  <div class="mt-4">
+  <button class="btn btn-info me-2" (click)="mostrarRanking = !mostrarRanking">
+     Ver Ranking
+  </button>
+
+  <button class="btn btn-secondary" routerLink="/">
+    Volver al home
+  </button>
+
+</div>
+</div>
