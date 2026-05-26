@@ -19,17 +19,38 @@
 
     <div class="card p-4 shadow-lg border-0">
       <div class="d-flex align-items-center gap-3 mb-3">
-        <div class="game-icon text-center"> JP </div>
+        <div class="game-icon text-center">SDK</div>
+
         <div>
-          <h4 class="mb-0">Juego Propio</h4>
-          <small class="text-muted"> Próximamente disponible </small>
+          <h4 class="mb-0">Juego Propio - Sudoku</h4>
+          <small class="text-muted">Juego de lógica y concentración</small>
         </div>
       </div>
-      <p class="mb-0 text-muted">
-        Actualmente me encuentro definiendo el desarrollo del juego propio
-        que formará parte de la Sala de Juegos. La idea es crear una experiencia
-        original e interactiva que permita medir habilidades del jugador y
-        registrar puntuaciones y estadísticas.
+
+      <p class="text-muted">
+        El juego propio desarrollado para esta Sala de Juegos es una versión
+        personalizada de Sudoku 6x6. El objetivo principal es completar el
+        tablero colocando correctamente los números del 1 al 6.
+      </p>
+
+      <h5 class="mt-3">¿Cómo se juega?</h5>
+
+      <ul class="text-muted">
+        <li> Cada celda vacía debe completarse con un número del 1 al 6. </li>
+        <li> No se pueden repetir números en una misma fila ni columna. </li>
+        <li> Algunas posiciones ya vienen bloqueadas al iniciar la partida. </li>
+        <li> El jugador suma puntos por cada movimiento correcto. </li>
+        <li> Los errores descuentan puntaje. </li>
+        <li> Al completar correctamente el tablero se finaliza la partida. </li>
+      </ul>
+
+      <h5 class="mt-3">Sistema de puntaje</h5>
+
+      <p class="text-muted mb-0">
+        El rendimiento del jugador se mide mediante un sistema de puntos basado
+        en movimientos correctos, errores cometidos y tiempo empleado para
+        completar el tablero. Los resultados quedan almacenados en la base de
+        datos y se muestran posteriormente en el ranking general.
       </p>
     </div>
   }
