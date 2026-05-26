@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Rankings } from '../../interfaces/ranking/ranking';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ranking',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './ranking.html',
   styleUrl: './ranking.css',
 })

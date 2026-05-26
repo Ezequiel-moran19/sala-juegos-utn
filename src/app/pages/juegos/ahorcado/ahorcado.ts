@@ -36,9 +36,9 @@ export class Ahorcado implements OnInit {
   tiempoActual = 0;
   ranking: Rankings[] = [];
 
-  async ngOnInit() {
+  ngOnInit() {
     this.iniciarJuego();
-    await this.cargarRanking();
+    this.cargarRanking();
   }
 
   iniciarJuego() {

@@ -41,6 +41,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/chat/chat')
     .then(m => m.Chat)
   },
+  {
+    path: 'resultados',
+    loadComponent: () =>
+      import('./pages/resultados/resultados')
+        .then(m => m.Resultados)
+  },
   { path: '**', redirectTo: '' }
 
 ];

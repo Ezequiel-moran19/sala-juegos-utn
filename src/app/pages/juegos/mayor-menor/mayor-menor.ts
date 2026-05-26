@@ -29,9 +29,9 @@ export class MayorMenor implements OnInit {
   mostrarRanking = false;
   ranking: Rankings[] = [];
 
-  async ngOnInit() {
+  ngOnInit() {
     this.iniciarJuego();
-    await this.cargarRanking();
+    this.cargarRanking();
   }
 
   iniciarJuego() {

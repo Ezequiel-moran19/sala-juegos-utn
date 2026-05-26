@@ -37,9 +37,9 @@ export class Sudoku implements OnInit {
   readonly numeros = [1, 2, 3, 4, 5, 6];
   private timerId: any;
 
-  async ngOnInit() {
+  ngOnInit() {
     this.nuevoJuego();
-    await this.cargarRanking();
+    this.cargarRanking();
   }
 
   nuevoJuego(): void {
