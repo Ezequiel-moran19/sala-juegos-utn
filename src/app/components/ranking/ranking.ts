@@ -7,7 +7,7 @@ import { Rankings } from '../../interfaces/ranking/ranking';
   templateUrl: './ranking.html',
   styleUrl: './ranking.css',
 })
-export class Ranking {
+export class RankingComponent {
   @Input() titulo = '';
   @Input() ranking: Rankings[] = [];
 }

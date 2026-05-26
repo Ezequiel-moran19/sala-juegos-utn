@@ -24,6 +24,12 @@ export const routes: Routes = [
     .then(m => m.MayorMenor)
   },
   {
+    path: 'preguntados',  
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/juegos/preguntados/preguntados')
+    .then(m => m.Preguntados)
+  },
+  {
     path: 'chat', 
     canActivate: [authGuard], 
     loadComponent: () => import('./pages/chat/chat')

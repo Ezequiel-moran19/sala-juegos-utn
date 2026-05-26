@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AhorcadoService } from './ahorcado.service';
+import { MayorMenorService } from '../mayor-menor-service/mayor-menor.service';
 
-describe('AhorcadoService', () => {
-  let service: AhorcadoService;
+describe('MayorMenor', () => {
+  let service: MayorMenorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AhorcadoService);
+    service = TestBed.inject(MayorMenorService);
   });
 
   it('should be created', () => {

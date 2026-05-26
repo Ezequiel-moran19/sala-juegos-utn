@@ -2,14 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CARTAS, PUNTAJE_ACIERTO } from '../../../data/mayor-menor.const';
 import { AuthService } from '../../../services/auth/auth.service';
-import { MayorMenorService } from '../../../services/juegos/mayor-menor.service';
+import { MayorMenorService } from '../../../services/juegos/mayor-menor-service/mayor-menor.service';
 import { Rankings } from '../../../interfaces/ranking/ranking';
 import { PartidaMayorMenor } from '../../../interfaces/juegos/mayor-menor/partida-mayor-menor';
-import { Ranking } from '../../../components/ranking/ranking';
+import { RankingComponent } from '../../../components/ranking/ranking';
 
 @Component({
   selector: 'app-mayor-menor',
-  imports: [ RouterLink, Ranking ],
+  imports: [ RouterLink, RankingComponent ],
   templateUrl: './mayor-menor.html',
   styleUrl: './mayor-menor.css',
 })
