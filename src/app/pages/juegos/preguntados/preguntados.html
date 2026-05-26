@@ -1,0 +1,50 @@
+<div class="container text-center mt-5">
+
+  @if (cargando) {
+    <p>Cargando preguntas...</p>
+  }
+
+  @if (!cargando && !mostrarRanking && !juegoTerminado) {
+
+    <h2>{{ preguntaActual?.pregunta }}</h2>
+
+    <p>Puntaje: {{ puntaje }}</p>
+
+    <p>Pregunta {{ indiceActual + 1 }} de {{ preguntas.length }}</p>
+
+    <div class="d-flex flex-column align-items-center gap-3 mt-4">
+      @for (opcion of opciones; track $index) {
+        <button class="btn btn-primary w-50" (click)="responder(opcion)">
+          {{ opcion }}
+        </button>
+      }
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+      <button class="btn btn-info" (click)="mostrarOcultarRanking()"> Ver Ranking </button>
+      <button class="btn btn-secondary" routerLink="/"> Volver al home </button>
+    </div>
+
+  }
+
+  @if (juegoTerminado && !mostrarRanking) {
+
+    <h2>Juego terminado</h2>
+    <p>Puntaje final: {{ puntaje }}</p>
+
+    <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+      <button class="btn btn-warning" (click)="reiniciarJuego()">Jugar otra vez </button>
+      <button class="btn btn-info" (click)="mostrarOcultarRanking()"> Ver Ranking </button>
+      <button class="btn btn-secondary" routerLink="/"> Volver al home </button>
+    </div>
+  }
+
+  @if (mostrarRanking) {
+    <app-ranking [titulo]="'Ranking Top 5'" [ranking]="ranking" />
+    <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+      <button class="btn btn-warning" (click)="mostrarOcultarRanking()"> Volver al juego </button>
+      <button class="btn btn-secondary" routerLink="/"> Volver al home </button>
+    </div>
+  }
+
+</div>

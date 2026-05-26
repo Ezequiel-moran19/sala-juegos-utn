@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AhorcadoService } from '../../../services/juegos/ahorcado.service';
+import { AhorcadoService } from '../../../services/juegos/ahorcado-service/ahorcado.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { PartidaAhorcado } from '../../../interfaces/juegos/ahorcado/partida-ahorcado';
-
 import { PALABRAS_AHORCADO, ABECEDARIO, MAX_ERRORES } from '../../../data/ahorcado.const';
 import { Rankings } from '../../../interfaces/ranking/ranking';
-import { Ranking } from "../../../components/ranking/ranking";
+import { RankingComponent } from "../../../components/ranking/ranking";
 
 @Component({
   selector: 'app-ahorcado',
-  imports: [CommonModule, RouterLink, Ranking],
+  imports: [CommonModule, RouterLink, RankingComponent],
   templateUrl: './ahorcado.html',
   styleUrl: './ahorcado.css',
 })
@@ -37,9 +36,9 @@ export class Ahorcado implements OnInit {
   tiempoActual = 0;
   ranking: Rankings[] = [];
 
-  async ngOnInit() {
+  ngOnInit() {
     this.iniciarJuego();
-    await this.cargarRanking();
+    this.cargarRanking();
   }
 
   iniciarJuego() {

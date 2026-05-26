@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { supabase } from '../supabase/supabase.client';
-import { PartidaAhorcado } from '../../interfaces/juegos/ahorcado/partida-ahorcado';
-import { generarRanking } from '../../utils/generar-ranking';
+import { supabase } from '../../supabase/supabase.client';
+import { PartidaAhorcado } from '../../../interfaces/juegos/ahorcado/partida-ahorcado';
+import { generarRanking } from '../../../utils/generar-ranking';
 
 @Injectable({
   providedIn: 'root',

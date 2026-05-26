@@ -16,7 +16,11 @@
   }
 
   @else {
+
     <h4 class="text-white fw-bold mt-3"> Selecciona un juego {{ authService.usuarioActual()?.email }} </h4>
+    <button class="btn btn-info" routerLink="/resultados">
+      Ver Resultados
+    </button>
     <div class="container mt-5">
       <h2 class="text-center mb-5 fw-bold text-white"> Juegos Disponibles </h2>
       <div class="row g-4">
@@ -25,5 +29,8 @@
         }
       </div>
     </div>
+    @if(authService.usuarioActual()){
+
   }
+}
 </div>

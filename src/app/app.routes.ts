@@ -24,10 +24,28 @@ export const routes: Routes = [
     .then(m => m.MayorMenor)
   },
   {
+    path: 'preguntados',  
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/juegos/preguntados/preguntados')
+    .then(m => m.Preguntados)
+  },
+  {
+    path: 'sudoku',  
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/juegos/sudoku/sudoku')
+    .then(m => m.Sudoku)
+  },
+  {
     path: 'chat', 
     canActivate: [authGuard], 
     loadComponent: () => import('./pages/chat/chat')
     .then(m => m.Chat)
+  },
+  {
+    path: 'resultados',
+    loadComponent: () =>
+      import('./pages/resultados/resultados')
+        .then(m => m.Resultados)
   },
   { path: '**', redirectTo: '' }
 

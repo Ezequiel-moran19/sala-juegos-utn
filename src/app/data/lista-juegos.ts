@@ -8,5 +8,15 @@ export const JUEGOS = [
     titulo: 'Mayor o Menor',
     imagen: 'img/MM.jpg',
     ruta: '/mayor-menor'
+  },
+  {
+    titulo: 'Preguntados',
+    imagen: 'img/PG.jpg',
+    ruta: '/preguntados'
+  },
+  {
+    titulo: 'Sudoku',
+    imagen: 'img/sudoku.jpg',
+    ruta: '/sudoku'
   }
 ];
