@@ -1,8 +1,23 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   background: #0f172a;
   color: #f8fafc;
   font-family: 'Segoe UI', sans-serif;
+}
+
+/* .app-container {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+} */
+
+.main-content {
+  flex: 1;
 }
 
 .card {

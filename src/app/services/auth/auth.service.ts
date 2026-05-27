@@ -9,27 +9,44 @@ export class AuthService {
 
   usuarioActual = signal<User | null>(null);
   cargandoSesion = signal(true);
+  perfil = signal<any>(null);
   estaLogueado = computed(() => this.usuarioActual() !== null);
 
   constructor() {
 
     this.checkSession();
 
-    supabase.auth.onAuthStateChange((_, session) => {
-      this.actualizarSesion(session?.user ?? null);
+    supabase.auth.onAuthStateChange(async (_, session) => {
+      await this.actualizarSesion(session?.user ?? null);
     });
   }
 
-  private actualizarSesion(user: User | null) {
+  private async actualizarSesion(user: User | null) {
 
     this.usuarioActual.set(user);
+
+    if(user){
+      await this.cargarPerfil(user.id);
+    }
+    else{
+      this.perfil.set(null);
+    }
+
     this.cargandoSesion.set(false);
   }
 
   async checkSession() {
 
     const { data: { session } } = await supabase.auth.getSession();
-    this.actualizarSesion(session?.user ?? null);
+
+    await this.actualizarSesion(session?.user ?? null);
+  }
+
+  async cargarPerfil(userId: string) {
+
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', userId);
+
+    this.perfil.set(data?.[0] ?? null);
   }
 
   registro(email: string, password: string) {

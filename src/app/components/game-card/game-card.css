@@ -1,0 +1,20 @@
+.juego-card{
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  cursor: pointer;
+}
+
+.juego-card:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.35);
+}
+
+.juego-card img{
+  transition: transform 0.4s ease;
+}
+
+.juego-card:hover img{
+  transform: scale(1.08);
+}

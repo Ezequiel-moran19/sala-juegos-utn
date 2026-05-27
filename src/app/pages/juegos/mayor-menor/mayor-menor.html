@@ -1,11 +1,8 @@
 <div class="container text-center mt-5">
-
   @if(!mostrarRanking){
-
     <h1 class="mb-5"> Mayor o Menor </h1>
 
     @if(!juegoTerminado){
-
       <div class="carta"> <span>{{ cartaActual }}</span> </div>
       <p class="fs-4 mt-4"> Puntaje: {{ puntaje }} </p>
       <p class="fs-5"> Cartas acertadas: {{ cartasAcertadas }} </p>
@@ -29,13 +26,13 @@
       <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
         <button class="btn btn-warning" (click)="iniciarJuego()" > Jugar otra vez </button>
         <button class="btn btn-secondary" routerLink="/" > Volver al home </button>
-        <button class="btn btn-info" (click)="mostrarOcultarRanking()" > Ver Ranking </button>
+        <button class="btn btn-info" (click)="mostrarOcultarRanking()"> Ver Ranking </button>
       </div>
     }
 
   } @else {
     <app-ranking [titulo]="'Ranking Top 5'" [ranking]="ranking" />
-    <button class="btn btn-secondary mt-4" (click)="mostrarOcultarRanking()" > Volver al juego </button>
+    <button class="btn btn-secondary mt-4" (click)="mostrarOcultarRanking()"> Volver al juego </button>
   }
 
 </div>
