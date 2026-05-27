@@ -1,15 +1,11 @@
 <div class="container text-center mt-5">
-
   @if (cargando) {
     <p>Cargando preguntas...</p>
   }
 
   @if (!cargando && !mostrarRanking && !juegoTerminado) {
-
     <h2>{{ preguntaActual?.pregunta }}</h2>
-
     <p>Puntaje: {{ puntaje }}</p>
-
     <p>Pregunta {{ indiceActual + 1 }} de {{ preguntas.length }}</p>
 
     <div class="d-flex flex-column align-items-center gap-3 mt-4">
@@ -28,7 +24,6 @@
   }
 
   @if (juegoTerminado && !mostrarRanking) {
-
     <h2>Juego terminado</h2>
     <p>Puntaje final: {{ puntaje }}</p>
 

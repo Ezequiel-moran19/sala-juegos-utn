@@ -79,9 +79,7 @@ export class Sudoku implements OnInit {
 
   async ponerNumero(numero: number): Promise<void> {
 
-    if ( this.filaSeleccionada === null ||
-        this.columnaSeleccionada === null ||
-        this.juegoTerminado ) {
+    if (this.filaSeleccionada === null || this.columnaSeleccionada === null || this.juegoTerminado ) {
       return;
     }
 
@@ -113,9 +111,9 @@ export class Sudoku implements OnInit {
     this.verificarNumeroCompleto(numero);
 
     if (this.sudokuService.tableroCompleto(this.tablero)) {
-      this.juegoTerminado = true;
-      this.puntos += 200;
-      await this.guardarPartida();
+        this.juegoTerminado = true;
+        this.puntos += 200;
+        await this.guardarPartida();
     }
   }
 
@@ -125,19 +123,16 @@ export class Sudoku implements OnInit {
     if (!completo) {
       return;
     }
-
     this.numerosCompletados.add(numero);
     this.puntos += 50;
     this.resaltarNumero(numero);
   }
 
   private resaltarNumero(numero: number): void {
-
     for (const fila of this.tablero) {
       for (const celda of fila) {
         if (celda.valor === numero) {
           celda.completado = true;
-
           setTimeout(() => {
             celda.completado = false;
           }, 1500);
@@ -147,10 +142,7 @@ export class Sudoku implements OnInit {
   }
 
   limpiarCelda(): void {
-
-    if (this.filaSeleccionada === null ||
-        this.columnaSeleccionada === null ||
-        this.juegoTerminado) {
+    if (this.filaSeleccionada === null || this.columnaSeleccionada === null || this.juegoTerminado) {
       return;
     }
 
@@ -161,7 +153,6 @@ export class Sudoku implements OnInit {
     }
 
     const valorAnterior = celda.valor;
-
     celda.valor = null;
     celda.error = false;
 
@@ -172,7 +163,6 @@ export class Sudoku implements OnInit {
   }
 
   obtenerCantidadRestante(numero: number): number {
-
     let cantidad = 0;
     for (const fila of this.tablero) {
       for (const celda of fila) {
@@ -199,7 +189,6 @@ export class Sudoku implements OnInit {
   }
 
   private async guardarPartida(): Promise<void> {
-
     const tiempo = Math.floor((Date.now() - this.tiempoInicio) / 1000);
     const partida: PartidaSudoku = {
       usuario: this.authService.usuarioActual()?.email ?? '',

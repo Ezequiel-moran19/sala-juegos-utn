@@ -27,16 +27,12 @@ export class PreguntadosService {
   }
 
   async guardarPartida(partida: { usuario: string; puntaje: number }) {
-    return await supabase
-      .from('partidas_preguntados')
-      .insert(partida);
+    return await supabase.from('partidas_preguntados').insert(partida);
   }
 
   async obtenerRanking() {
 
-    const { data, error } = await supabase
-      .from('partidas_preguntados')
-      .select('usuario, puntaje');
+    const { data, error } = await supabase.from('partidas_preguntados').select('usuario, puntaje');
 
     if (error || !data) {
       return { data: [], error };

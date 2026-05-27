@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Resultados Encuestas</h2>
+  <div class="table-responsive">
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Edad</th>
+          <th>Teléfono</th>
+          <th>Intereses</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (e of encuestas; track e.email) {
+          <tr>
+            <td>{{ e.email }}</td>
+            <td>{{ e.edad }}</td>
+            <td>{{ e.telefono }}</td>
+            <td>{{ e.intereses?.join(', ') }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

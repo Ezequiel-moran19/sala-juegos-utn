@@ -44,7 +44,6 @@ export class Preguntados implements OnInit {
     this.preguntadosService.obtenerPreguntas()
       .subscribe({
         next: (data) => {
-
           this.preguntas = this.preguntadosService.mapearPreguntas(data);
           this.indiceActual = 0;
           this.juegoTerminado = false;
@@ -64,7 +63,6 @@ export class Preguntados implements OnInit {
   cargarPreguntaActual() {
 
     if (this.indiceActual < this.preguntas.length) {
-
       this.preguntaActual = this.preguntas[this.indiceActual];
       this.opciones = this.preguntadosService.mezclarOpciones([
         this.preguntaActual.respuestaCorrecta,
@@ -78,7 +76,6 @@ export class Preguntados implements OnInit {
   }
 
   responder(opcion: string) {
-
     if (opcion === this.preguntaActual?.respuestaCorrecta) {
       this.respuestasCorrectas++;
       this.puntaje += 100;
@@ -95,7 +92,6 @@ export class Preguntados implements OnInit {
   private async finalizarJuego() {
 
     const tiempo = Math.floor((Date.now() - this.tiempoInicio) / 1000);
-
     const bonusTiempo = Math.max(0, 200 - tiempo);
 
     this.puntaje += bonusTiempo;
@@ -105,14 +101,7 @@ export class Preguntados implements OnInit {
     }
 
     const usuario = this.authService.usuarioActual()?.email ?? '';
-
-    const partida = {
-      usuario,
-      puntaje: this.puntaje,
-      aciertos: this.respuestasCorrectas,
-      errores: this.errores,
-      tiempo
-    };
+    const partida = { usuario, puntaje: this.puntaje, aciertos: this.respuestasCorrectas, errores: this.errores, tiempo };
 
     const { error } = await this.preguntadosService.guardarPartida(partida);
 
@@ -141,7 +130,6 @@ export class Preguntados implements OnInit {
   }
 
   reiniciarJuego() {
-
     this.preguntas = [];
     this.preguntaActual = undefined;
     this.opciones = [];

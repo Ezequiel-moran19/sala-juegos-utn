@@ -4,6 +4,9 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { QuienSoy } from './pages/quien-soy/quien-soy';
 import { authGuard } from './guards/auth.guard';
+import { Encuesta } from './pages/encuesta/encuesta';
+import { adminGuard } from './guards/admin-guard';
+import { ResultadosEncuestas } from './pages/resultados-encuestas/resultados-encuestas';
 
 export const routes: Routes = [
 
@@ -46,6 +49,16 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/resultados/resultados')
         .then(m => m.Resultados)
+  },
+  {
+    path: 'encuesta',
+    component: Encuesta,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'admin/resultados-encuestas',
+    component: ResultadosEncuestas,
+    canActivate: [adminGuard]
   },
   { path: '**', redirectTo: '' }
 

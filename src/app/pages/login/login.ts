@@ -41,7 +41,7 @@ export class Login {
   async iniciarSesion() {
 
     const form = this.formLogin.value;
-    const { error } = await this.authService.login( form.email!, form.password! );
+    const { error } = await this.authService.login(form.email!, form.password!);
 
     this.cargando.set(false);
 
@@ -49,12 +49,11 @@ export class Login {
       this.manejarError(error);
       return;
     }
-
+    await this.authService.checkSession();
     this.router.navigate(['/']);
   }
 
   manejarError(error: any) {
-
     if (error.code === 'invalid_credentials') {
       this.mensajeError.set( 'Correo electrónico o contraseña incorrectos.' );
 
@@ -76,7 +75,7 @@ export class Login {
     }, 3000);
   }
 
-  loginRapido(email: string, password: string) {
+  async loginRapido(email: string, password: string) {
     this.formLogin.patchValue({ email, password });
   }
 }

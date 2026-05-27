@@ -33,21 +33,15 @@ export class Register {
   });
 
   async onSubmit() {
-
     this.limpiarMensajes();
 
     if (this.formRegistro.invalid) {
-
       this.formRegistro.markAllAsTouched();
-
       return;
-
     }
 
     this.cargando.set(true);
-
     await this.registrarUsuario();
-
   }
 
   limpiarMensajes() {
@@ -56,7 +50,6 @@ export class Register {
   }
 
   async registrarUsuario() {
-
     const form = this.formRegistro.value;
     const { data, error } = await this.authService.registro( form.email!, form.password! );
 
@@ -68,53 +61,34 @@ export class Register {
     const user = data.user;
 
     if (!user) {
-
       this.mensajeError.set('No se pudo obtener el usuario');
       this.cargando.set(false);
-
       return;
-
     }
-
     await this.guardarUsuarioDB(user);
-
   }
 
   manejarError(error: any) {
-
     this.cargando.set(false);
-
     if (error.code === 'user_already_exists') {
-
       this.mensajeError.set( 'El usuario ya se encuentra registrado' );
+
     } else {
-
       this.mensajeError.set( 'Error al registrar usuario' );
-
     }
-
     this.resetearFormulario();
-
   }
 
   resetearFormulario() {
-
     this.formRegistro.reset();
-
     setTimeout(() => {
-
       this.mensajeError.set('');
-
       const inputName = document.getElementById('name');
-
       inputName?.focus();
-
     }, 3000);
-
   }
 
   async guardarUsuarioDB(user: User) {
-
     const form = this.formRegistro.value;
     const usuario: UsuarioRegistro = { nombre: form.nombre!, apellido: form.apellido!, edad: Number(form.edad), email: user.email! };
     const { error } = await this.usuariosService.guardarUsuario( user.id, usuario );
@@ -122,11 +96,8 @@ export class Register {
     this.cargando.set(false);
 
     if (error) {
-
       this.mensajeError.set( 'Error al guardar usuario en la base de datos' );
-
       return;
-
     }
 
     await this.authService.login(
@@ -138,17 +109,8 @@ export class Register {
     this.formRegistro.reset();
 
     setTimeout(() => {
-
       this.mensajeExito.set('');
       this.router.navigate(['/']);
-
     }, 3000);
-
   }
-
-  completarFormularioTest( nombre: string, apellido: string, edad: string, email: string, password: string) {
-
-    this.formRegistro.patchValue({  nombre,  apellido, edad, email, password });
-  }
-
 }
