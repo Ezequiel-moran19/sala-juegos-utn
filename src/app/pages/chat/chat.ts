@@ -73,12 +73,7 @@ export class Chat implements OnInit {
     if (this.formMensaje.invalid) return;
 
     const texto = this.formMensaje.value.mensaje;
-
-    const mensaje = this.chatService.crearMensaje(
-      this.authService.usuarioActual()?.email ?? '',
-      texto
-    );
-
+    const mensaje = this.chatService.crearMensaje(this.authService.usuarioActual()?.email ?? '', texto);
     const { error } = await this.chatService.enviarMensaje(mensaje);
 
     if (error) {
@@ -96,8 +91,7 @@ export class Chat implements OnInit {
 
     this.canalChat = supabase
       .channel(this.canal)
-      .on(
-        'postgres_changes',
+      .on('postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
@@ -110,14 +104,21 @@ export class Chat implements OnInit {
             const nuevo = payload.new as MensajeChat;
 
             this.mensajes = [...this.mensajes, nuevo];
-
             this.cdr.detectChanges();
-
             this.autoScroll();
           });
         }
-      )
-      .subscribe();
+      ).subscribe((status) => {
+        console.log(status);
+      });
+  }
+
+  formatearFecha(fecha: string): string {
+    const date = new Date(fecha);
+
+    return date.toLocaleString('es-AR', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
   }
 
   esMensajePropio(mensaje: MensajeChat): boolean {
