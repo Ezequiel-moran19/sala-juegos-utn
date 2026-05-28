@@ -27,7 +27,7 @@ export class Register {
   formRegistro = new FormGroup({
     nombre: new FormControl('', Validators.required),
     apellido: new FormControl('', Validators.required),
-    edad: new FormControl('', [ Validators.required, Validators.min(18) ]),
+    edad: new FormControl('', [ Validators.required, Validators.min(10) ]),
     email: new FormControl('', [ Validators.required, Validators.email ]),
     password: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
   });

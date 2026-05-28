@@ -5,16 +5,26 @@ import { supabase } from '../supabase/supabase.client';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   usuarioActual = signal<User | null>(null);
-  cargandoSesion = signal(true);
   perfil = signal<any>(null);
+
+  cargandoSesion = signal(true);
+  perfilCargado = signal(false);
+
+  authReady = signal(false);
+
   estaLogueado = computed(() => this.usuarioActual() !== null);
 
   constructor() {
+    this.init();
+  }
 
-    this.checkSession();
+  private async init() {
+    await this.checkSession();
+    this.authReady.set(true);
 
     supabase.auth.onAuthStateChange(async (_, session) => {
       await this.actualizarSesion(session?.user ?? null);
@@ -23,38 +33,49 @@ export class AuthService {
 
   private async actualizarSesion(user: User | null) {
 
+    this.perfilCargado.set(false);
+    this.cargandoSesion.set(true);
+
     this.usuarioActual.set(user);
 
-    if(user){
+    if (user) {
       await this.cargarPerfil(user.id);
-    }
-    else{
+    } else {
       this.perfil.set(null);
     }
 
+    this.perfilCargado.set(true);
     this.cargandoSesion.set(false);
   }
 
   async checkSession() {
-
     const { data: { session } } = await supabase.auth.getSession();
-
     await this.actualizarSesion(session?.user ?? null);
   }
 
-  async cargarPerfil(userId: string) {
+  private async cargarPerfil(userId: string) {
 
-    const { data, error } = await supabase.from('profiles').select('*').eq('id', userId);
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .maybeSingle(); 
 
-    this.perfil.set(data?.[0] ?? null);
-  }
+    if (error) {
+      console.error('[Auth] error perfil:', error);
+      this.perfil.set(null);
+      return;
+    }
 
-  registro(email: string, password: string) {
-    return supabase.auth.signUp({ email, password });
+    this.perfil.set(data ?? null);
   }
 
   async login(email: string, password: string) {
     return await supabase.auth.signInWithPassword({ email, password });
+  }
+
+  async registro(email: string, password: string) {
+    return await supabase.auth.signUp({ email, password });
   }
 
   async cerrarSesion() {

@@ -1,14 +1,20 @@
-@if(!authService.cargandoSesion()){
+@if(!authService.cargandoSesion()) {
 
   <div class="container mt-5">
     <h1 class="text-center mb-4">Sala de Chat</h1>
-    <div class="border rounded p-3 overflow-auto" style="height: 500px;">
 
-      @for(mensaje of mensajes; track mensaje.id ?? mensaje.fecha){
-        <div class="rounded p-2 mb-3" [class.bg-primary]="esMensajePropio(mensaje)" [class.bg-dark]="!esMensajePropio(mensaje)" >
+    <div #chatBox class="border rounded p-3 overflow-auto" style="height: 500px;">
+
+      @for(mensaje of mensajes; track mensaje.id ?? mensaje.fecha) {
+
+        <div class="rounded p-2 mb-3"
+             [class.bg-primary]="esMensajePropio(mensaje)"
+             [class.bg-dark]="!esMensajePropio(mensaje)">
+
           <strong>{{ mensaje.usuario }}</strong>
-          <p class="mb-1"> {{ mensaje.mensaje }}</p>
+          <p class="mb-1">{{ mensaje.mensaje }}</p>
           <small>{{ mensaje.fecha }}</small>
+
         </div>
       }
 
@@ -16,7 +22,9 @@
 
     <form [formGroup]="formMensaje" (ngSubmit)="enviarMensaje()" class="d-flex gap-2 mt-4">
       <input type="text" class="form-control" formControlName="mensaje" placeholder="Escribí un mensaje...">
-      <button class="btn btn-primary" type="submit" [disabled]="formMensaje.invalid"> Enviar </button>
+      <button class="btn btn-primary" type="submit" [disabled]="formMensaje.invalid">
+        Enviar
+      </button>
     </form>
 
   </div>

@@ -75,7 +75,4 @@ export class Login {
     }, 3000);
   }
 
-  async loginRapido(email: string, password: string) {
-    this.formLogin.patchValue({ email, password });
-  }
 }
